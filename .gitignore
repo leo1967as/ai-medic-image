@@ -1,0 +1,13 @@
+# Dependencies - โฟลเดอร์ที่เก็บไลบรารีทั้งหมด (มีขนาดใหญ่มาก)
+/node_modules
+
+# Environment variables - ไฟล์เก็บข้อมูลลับของเรา
+.env
+
+# Log files - ไฟล์บันทึกข้อผิดพลาดต่างๆ ที่อาจเกิดขึ้น
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+Construct.txt
+.vercel
