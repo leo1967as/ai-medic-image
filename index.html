@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI วินิจฉัยโรคผิวหนัง</title>
+    <!-- 1. ลิงก์ไปยังไฟล์ CSS ของเรา -->
+    <link rel="stylesheet" href="style.css">
+    <!-- 2. ลิงก์ไปยังไฟล์ JavaScript หลัก และระบุว่าเป็น module -->
+    <script src="scripts/main.js" type="module" defer></script>
+</head>
+<body>
+
+    <header>
+        <h1>AI วินิจฉัยโรคผิวหนังเบื้องต้น</h1>
+        <p>อัปโหลดรูปภาพสภาพผิวหนังของคุณเพื่อให้ AI ช่วยวิเคราะห์</p>
+    </header>
+
+    <main>
+        <!-- 3. ส่วนของฟอร์มอัปโหลด -->
+        <div class="upload-container">
+            <input type="file" id="imageUpload" accept="image/*" hidden>
+            <button id="uploadButton">เลือกรูปภาพ</button>
+            <p id="fileName">ยังไม่ได้เลือกไฟล์</p>
+        </div>
+
+        <button id="submitButton" disabled>ส่งเพื่อวินิจฉัย</button>
+
+        <!-- 4. ส่วนสำหรับแสดงผลลัพธ์และสถานะ -->
+        <div id="resultContainer" class="result-container" hidden>
+            <h2>ผลการวินิจฉัย:</h2>
+            <div id="loader" class="loader" hidden></div>
+            <div id="error" class="error-message" hidden></div>
+            <div id="resultContent">
+                <!-- ข้อมูลจาก AI จะถูกใส่ในนี้ด้วย JavaScript -->
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p><strong>คำเตือน:</strong> ผลลัพธ์นี้เป็นการวินิจฉัยเบื้องต้นโดย AI เท่านั้น และไม่สามารถใช้แทนการวินิจฉัยจากแพทย์ผู้เชี่ยวชาญได้ กรุณาปรึกษาแพทย์เพื่อการยืนยันผล</p>
+    </footer>
+
+</body>
+</html>

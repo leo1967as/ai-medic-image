@@ -4,6 +4,7 @@
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 const config = require('../../config'); // ตัวจัดการ Config ที่เราสร้างไว้ในขั้นตอนที่ 2
 
+
 // --- 2. ตั้งค่าและตรวจสอบ Gemini API ---
 
 // ตรวจสอบว่า API Key ถูกโหลดมาอย่างถูกต้องหรือไม่
@@ -62,8 +63,18 @@ class DiagnosisService {
     // ส่ง Request ไปยัง Gemini API (ทั้ง Prompt และ รูปภาพ) และรอคำตอบ
     const result = await model.generateContent([prompt, imagePart]);
     const response = result.response;
-    const textResponse = response.text();
 
+    let textResponse = response.text();
+    if (textResponse.startsWith("```json")) {
+      console.log("Sanitizing response: Found JSON markdown block.");
+      // ลบ ```json ที่ตอนต้น และ ``` ที่ตอนท้าย
+      textResponse = textResponse.replace("```json", "").replace("```", "");
+    }
+    // --- บรรทัดที่เราจะเพิ่มเข้าไปเพื่อ Debug ---
+console.log("--- RAW RESPONSE FROM GEMINI ---");
+console.log(textResponse);
+console.log("-------------------------------");
+// -----------------------------------------
     // พยายามแปลงข้อความที่ได้จาก AI ให้เป็น JSON
     try {
       const jsonResult = JSON.parse(textResponse);
