@@ -25,9 +25,16 @@ function updateUI() {
 
 // ฟังก์ชันเพิ่มไฟล์ใหม่เข้ามาใน State
 function handleAddFiles(newFiles) {
-  // แปลง FileList ให้เป็น Array แล้วนำมาต่อกับอาร์เรย์เดิม
-  selectedFiles = selectedFiles.concat(Array.from(newFiles));
-  // อัปเดต UI
+  // 1. แปลง FileList ให้เป็น Array
+  const filesArray = Array.from(newFiles);
+
+  // 2. กรองเอาเฉพาะอ็อบเจ็กต์ที่เป็น File จริงๆ และมีขนาดมากกว่า 0
+  const validFiles = filesArray.filter(file => file instanceof File && file.size > 0);
+
+  // 3. นำไฟล์ที่ถูกต้องมาต่อกับอาร์เรย์เดิม
+  selectedFiles = selectedFiles.concat(validFiles);
+  
+  // 4. อัปเดต UI
   updateUI();
 }
 
