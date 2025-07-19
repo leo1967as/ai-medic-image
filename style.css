@@ -76,13 +76,13 @@ button {
     font-weight: 600;
 }
 
-#uploadButton {
+.button-group button {
     background-color: #ffffff;
     color: #1a73e8;
     border: 1px solid #dadce0;
 }
 
-#uploadButton:hover {
+.button-group button:hover {
     background-color: #f8f9fa;
 }
 
@@ -138,9 +138,32 @@ button {
     100% { transform: rotate(360deg); }
 }   
 
-```css
-/* style.css */
-/* ... (โค้ดเดิม) ... */
+/* --- สไตล์ใหม่สำหรับปุ่มลบ --- */
+.delete-button {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 24px;
+    height: 24px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    border: 2px solid white;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 1;
+    opacity: 0; /* ซ่อนไว้ก่อน */
+    transition: opacity 0.2s;
+}
+
+/* แสดงปุ่มลบเมื่อนำเมาส์ไปชี้ที่รูป */
+.preview-image-wrapper:hover .delete-button {
+    opacity: 1;
+}
 
 /* --- สไตล์ใหม่สำหรับ Preview Container --- */
 .preview-container {
@@ -233,4 +256,10 @@ textarea:focus {
     outline: none;
     border-color: #1a73e8;
     box-shadow: 0 0 0 2px #d2e3fc;
+}
+
+.button-group {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
 }

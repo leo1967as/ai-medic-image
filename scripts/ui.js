@@ -11,22 +11,32 @@ const submitButton = document.getElementById('submitButton');
 const imagePreviewContainer = document.getElementById('imagePreviewContainer'); // ใหม่
 // --- 2. สร้างฟังก์ชันสำหรับจัดการสถานะต่างๆ ของ UI ---
 
-function displayImagePreviews(files) {
-  imagePreviewContainer.innerHTML = ''; // เคลียร์ของเก่า
-  for (const file of files) {
+function displayImagePreviews(files, onDelete) {
+  imagePreviewContainer.innerHTML = ''; // เคลียร์ของเก่าทั้งหมด
+  
+  // วนลูปสร้างภาพตัวอย่างใหม่ทั้งหมดจาก state ปัจจุบัน
+  files.forEach((file, index) => {
     const reader = new FileReader();
     reader.onload = (e) => {
+      const wrapper = document.createElement('div');
+      wrapper.classList.add('preview-image-wrapper');
+
       const img = document.createElement('img');
       img.src = e.target.result;
       img.classList.add('preview-image');
       
-      const wrapper = document.createElement('div');
-      wrapper.classList.add('preview-image-wrapper');
+      // --- เพิ่มปุ่มลบ ---
+      const deleteBtn = document.createElement('button');
+      deleteBtn.classList.add('delete-button');
+      deleteBtn.innerHTML = '×'; // เครื่องหมายกากบาท
+      deleteBtn.onclick = () => onDelete(index); // เรียกฟังก์ชันลบเมื่อคลิก
+
       wrapper.appendChild(img);
+      wrapper.appendChild(deleteBtn);
       imagePreviewContainer.appendChild(wrapper);
     };
     reader.readAsDataURL(file);
-  }
+  });
 }
 
 /**

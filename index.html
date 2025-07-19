@@ -20,8 +20,10 @@
         <div class="upload-container">
             <!-- เพิ่ม attribute 'multiple' เพื่อให้เลือกได้หลายไฟล์ -->
             <input type="file" id="imageUpload" accept="image/*" hidden multiple>
-            <button id="uploadButton">เลือกรูปภาพ</button>
-            
+            <div class="button-group">
+                <button id="selectFilesButton">เลือกจากอัลบั้ม</button>
+                <button id="takePhotoButton">ถ่ายรูป</button>
+            </div>
             <!-- เพิ่ม div สำหรับแสดงภาพตัวอย่าง -->
             <div id="imagePreviewContainer" class="preview-container"></div>
         </div>
