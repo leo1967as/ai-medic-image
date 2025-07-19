@@ -46,7 +46,7 @@ const upload = multer({
 // เราจะใส่ Middleware 'upload' เข้าไป "คั่นกลาง"
 router.post(
   '/',
-  upload.single('diagnosticImage'), // <-- Multer จะทำงานตรงนี้
+  upload.array('diagnosticImages', 5),  // <-- Multer จะทำงานตรงนี้
   diagnosisController.uploadAndDiagnose,// <-- เปลี่ยนจากฟังก์ชันชั่วคราวเป็น Controller จริง
   (req, res) => {
     // นี่คือ Controller ชั่วคราวที่เราจะสร้างขึ้นเพื่อทดสอบ

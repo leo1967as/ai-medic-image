@@ -1,65 +1,48 @@
-// public/scripts/main.js
-
-// --- 1. Import ทุกอย่างที่ต้องใช้จากไฟล์อื่น ---
+//scripts/main.js
 import { uploadImageForDiagnosis } from './api.js';
-import {
-  showLoading,
-  showResult,
-  showError,
-  updateFileName,
-  setSubmitButtonEnabled
-} from './ui.js';
+import { showLoading, showResult, showError, setSubmitButtonEnabled, displayImagePreviews } from './ui.js';
 
-// --- 2. ดึง Element ที่ต้องใช้ในการเพิ่ม Event Listener ---
 const imageUploadInput = document.getElementById('imageUpload');
 const uploadButton = document.getElementById('uploadButton');
 const submitButton = document.getElementById('submitButton');
+const symptomsInput = document.getElementById('symptomsInput'); // <-- เพิ่มเข้ามา
 
-// --- 3. สร้างตัวแปรสำหรับเก็บสถานะ (State Management) ---
-// เราต้องการตัวแปรหนึ่งตัวเพื่อเก็บไฟล์ที่ผู้ใช้เลือกไว้
-let selectedFile = null;
+let selectedFiles = []; // เปลี่ยนเป็นอาร์เรย์
 
-// --- 4. กำหนด Event Listeners (หัวใจของการโต้ตอบ) ---
+uploadButton.addEventListener('click', () => imageUploadInput.click());
 
-// Event Listener สำหรับปุ่ม "เลือกรูปภาพ"
-uploadButton.addEventListener('click', () => {
-  // เมื่อคลิกปุ่มนี้ ให้ไปกระตุ้นการคลิกที่ input file ที่ซ่อนอยู่
-  imageUploadInput.click();
-});
-
-// Event Listener สำหรับ input file เอง
 imageUploadInput.addEventListener('change', (event) => {
-  // 'event.target.files' จะเป็นรายการไฟล์ที่ผู้ใช้เลือก
-  const file = event.target.files[0];
-  if (file) {
-    selectedFile = file; // เก็บไฟล์ที่เลือกไว้ในตัวแปรของเรา
-    updateFileName(file.name); // สั่งให้ UI อัปเดตชื่อไฟล์
-    setSubmitButtonEnabled(true); // สั่งให้ UI เปิดใช้งานปุ่ม Submit
+  // event.target.files เป็น FileList ไม่ใช่อาร์เรย์แท้
+  const files = Array.from(event.target.files);
+  if (files.length > 0) {
+    selectedFiles = files;
+    displayImagePreviews(selectedFiles); // แสดงภาพตัวอย่าง
+    setSubmitButtonEnabled(true);
   }
 });
 
-// Event Listener สำหรับปุ่ม "ส่งเพื่อวินิจฉัย"
 submitButton.addEventListener('click', async () => {
-  // ตรวจสอบอีกครั้งว่ามีไฟล์ที่ถูกเลือกหรือไม่
-  if (!selectedFile) {
+  if (selectedFiles.length === 0) {
     showError('กรุณาเลือกรูปภาพก่อนส่ง');
     return;
   }
-
-  // --- นี่คือ Flow การทำงานหลัก ---
   try {
-    // 1. สั่งให้ UI แสดงสถานะกำลังโหลด
     showLoading();
+    // ส่งอาร์เรย์ของไฟล์ไปให้ API
+    const symptomsText = symptomsInput.value; 
 
-    // 2. สั่งให้ API อัปโหลดไฟล์และรอผลลัพธ์ (ใช้ await)
-    const resultData = await uploadImageForDiagnosis(selectedFile);
-
-    // 3. เมื่อได้ผลลัพธ์แล้ว สั่งให้ UI แสดงผลลัพธ์นั้น
+    const resultData = await uploadImageForDiagnosis(selectedFiles, symptomsText);
     showResult(resultData);
-
   } catch (error) {
-    // 4. หากเกิดข้อผิดพลาดขึ้นในขั้นตอนใดๆ (ทั้งจาก API หรือ Network)
-    // ให้สั่ง UI แสดงข้อผิดพลาดนั้น
     showError(error.message);
   }
+});
+
+// จัดการ UI เมื่อผู้ใช้โฟกัสที่ Textarea บนมือถือ
+symptomsInput.addEventListener('focus', () => {
+  // ใช้ setTimeout เพื่อให้แน่ใจว่าคีย์บอร์ดมีเวลาแสดงขึ้นมาก่อน
+  setTimeout(() => {
+    // เลื่อน Textarea ให้อยู่ในมุมมอง
+    symptomsInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }, 300); 
 });

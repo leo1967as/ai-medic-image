@@ -137,3 +137,100 @@ button {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }   
+
+```css
+/* style.css */
+/* ... (โค้ดเดิม) ... */
+
+/* --- สไตล์ใหม่สำหรับ Preview Container --- */
+.preview-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 1.5rem;
+    justify-content: center;
+}
+
+.preview-image-wrapper {
+    position: relative;
+    width: 100px;
+    height: 100px;
+}
+
+.preview-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+/* --- สไตล์ใหม่สำหรับการ์ดผลลัพธ์ --- */
+.diagnosis-card {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-left: 5px solid #1a73e8; /* แถบสีด้านซ้าย */
+    border-radius: 8px;
+    padding: 1rem 1.5rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.diagnosis-card h3 {
+    margin-top: 0;
+    color: #1a73e8;
+}
+
+.diagnosis-card .confidence {
+    font-weight: bold;
+    color: #3c4043;
+}
+
+/* ปรับสีแถบด้านซ้ายสำหรับการ์ดอันดับรองๆ */
+.diagnosis-card:nth-child(2) {
+    border-left-color: #fbbc05; /* สีเหลือง */
+}
+.diagnosis-card:nth-child(2) h3 {
+    color: #c59300;
+}
+
+.diagnosis-card:nth-child(3) {
+    border-left-color: #e8710a; /* สีส้ม */
+}
+.diagnosis-card:nth-child(3) h3 {
+    color: #b85906;
+}
+
+```css
+/* style.css */
+/* ... (โค้ดเดิม) ... */
+
+/* --- สไตล์ใหม่สำหรับ Symptoms Container --- */
+.symptoms-container {
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.symptoms-container label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #3c4043;
+}
+
+textarea {
+    width: 100%;
+    padding: 0.8rem;
+    font-size: 1rem;
+    font-family: inherit; /* ให้ใช้ฟอนต์เดียวกับ body */
+    border: 1px solid #dadce0;
+    border-radius: 4px;
+    resize: vertical; /* อนุญาตให้ผู้ใช้ปรับขนาดแค่แนวตั้ง */
+    box-sizing: border-box; /* ป้องกันไม่ให้ padding ทำให้ขนาดเกิน */
+}
+
+textarea:focus {
+    outline: none;
+    border-color: #1a73e8;
+    box-shadow: 0 0 0 2px #d2e3fc;
+}

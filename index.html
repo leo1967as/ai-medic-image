@@ -17,25 +17,33 @@
     </header>
 
     <main>
-        <!-- 3. ส่วนของฟอร์มอัปโหลด -->
         <div class="upload-container">
-            <input type="file" id="imageUpload" accept="image/*" hidden>
+            <!-- เพิ่ม attribute 'multiple' เพื่อให้เลือกได้หลายไฟล์ -->
+            <input type="file" id="imageUpload" accept="image/*" hidden multiple>
             <button id="uploadButton">เลือกรูปภาพ</button>
-            <p id="fileName">ยังไม่ได้เลือกไฟล์</p>
+            
+            <!-- เพิ่ม div สำหรับแสดงภาพตัวอย่าง -->
+            <div id="imagePreviewContainer" class="preview-container"></div>
         </div>
-
+        <div class="symptoms-container">
+            <label for="symptomsInput">อาการเพิ่มเติม :</label>
+            <textarea id="symptomsInput" rows="4" placeholder="เช่น คันมากตอนกลางคืน, เป็นมาแล้ว 3 วัน, เคยมีประวัติเป็นภูมิแพ้..."></textarea>
+        </div>
         <button id="submitButton" disabled>ส่งเพื่อวินิจฉัย</button>
 
-        <!-- 4. ส่วนสำหรับแสดงผลลัพธ์และสถานะ -->
+    
         <div id="resultContainer" class="result-container" hidden>
             <h2>ผลการวินิจฉัย:</h2>
             <div id="loader" class="loader" hidden></div>
             <div id="error" class="error-message" hidden></div>
-            <div id="resultContent">
-                <!-- ข้อมูลจาก AI จะถูกใส่ในนี้ด้วย JavaScript -->
+            <!-- เปลี่ยนจาก resultContent เป็น diagnosesList เพื่อรองรับหลายรายการ -->
+            <div id="diagnosesList">
+                <!-- การ์ดผลลัพธ์จะถูกสร้างที่นี่ -->
             </div>
         </div>
+
     </main>
+
 
     <footer>
         <p><strong>คำเตือน:</strong> ผลลัพธ์นี้เป็นการวินิจฉัยเบื้องต้นโดย AI เท่านั้น และไม่สามารถใช้แทนการวินิจฉัยจากแพทย์ผู้เชี่ยวชาญได้ กรุณาปรึกษาแพทย์เพื่อการยืนยันผล</p>
